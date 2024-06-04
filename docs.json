@@ -1,0 +1,3559 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+      "title": "AGUNA EDU",
+      "version": "1.0"
+    },
+    "servers": [{ "url": "https://api.aguna.com/api/v1" }],
+    "paths": {
+      "/public/landing/role": {
+        "get": {
+          "tags": ["Landing"],
+          "summary": "Landing page data",
+          "description": "Retrieve all data needed for the landing page",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get all data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "roles": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                                "type": "string"
+                            },
+                            "totalPath": {
+                              "type": "number"
+                            },
+                            "totalCourse": {
+                                "type": "number"
+                            },
+                            "totalStudent": {
+                              "type": "number"
+                            },
+                            "paths": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "imageurl": {
+                                    "type": "string"
+                                  },
+                                  "description": {
+                                    "type": "string"
+                                  },
+                                  "totalStudent": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "roles": [
+                      {
+                        "id": 1,
+                        "name": "Hustler",
+                        "totalPath": 3,
+                        "totalCourse": 30,
+                        "totalStudent": 150,
+                        "paths": [
+                          {
+                            "id": 1,
+                            "name": "Business Development",
+                            "imageurl": "https://example.com/image1.png",
+                            "description": "Learn the art of business development",
+                            "totalStudent": 200
+                          },
+                          {
+                            "id": 2,
+                            "name": "Sales Mastery",
+                            "imageurl": "https://example.com/image2.png",
+                            "description": "Master the skills of sales",
+                            "totalStudent": 200
+                          }
+                        ]
+                      },
+                      {
+                        "id": 2,
+                        "name": "Hacker",
+                        "totalPath": 4,
+                        "totalCourse": 30,
+                        "totalStudent": 200,
+                        "paths": [
+                          {
+                            "id": 3,
+                            "name": "Web Development",
+                            "imageurl": "https://example.com/image3.png",
+                            "description": "Become a web developer",
+                            "pathFocus": 200
+                          },
+                          {
+                            "id": 4,
+                            "name": "Cybersecurity",
+                            "imageurl": "https://example.com/image4.png",
+                            "description": "Learn to secure systems",
+                            "pathFocus": 200
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/public/landing/event": {
+        "get": {
+          "tags": ["Landing"],
+          "summary": "Landing page data",
+          "description": "Retrieve all data needed for the landing page",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get all data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "timestamp": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "imgUrl": {
+                                "type": "string"
+                            },
+                            "description": {
+                              "type": "number"
+                            },
+                            "skills": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "event": [
+                      {
+                        "id": 1,
+                        "name": "Web Development Workshop",
+                        "timestamp": "2024-06-20T15:30:00Z",
+                        "description": "An in-depth workshop on modern web development practices.",
+                        "imgUrl": "https://example.com/images/event1.png",
+                        "skills": [
+                          {
+                            "id": 101,
+                            "name": "JavaScript"
+                          },
+                          {
+                            "id": 102,
+                            "name": "React"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 2,
+                        "name": "Data Science Seminar",
+                        "timestamp": "2024-07-15T10:00:00Z",
+                        "description": "A seminar focusing on the latest trends in data science.",
+                        "imgUrl": "https://example.com/images/event2.png",
+                        "skills": [
+                          {
+                            "id": 103,
+                            "name": "Python"
+                          },
+                          {
+                            "id": 104,
+                            "name": "Machine Learning"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/public/landing/challenge": {
+        "get": {
+          "tags": ["Landing"],
+          "summary": "Landing page data",
+          "description": "Retrieve all data needed for the landing page",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get all data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "challenge": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "endData": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "imgUrl": {
+                                "type": "string"
+                            },
+                            "description": {
+                              "type": "number"
+                            },
+                            "skills": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "challenge": [
+                      {
+                        "id": 1,
+                        "name": "Web Development Challenge",
+                        "startDate": "2024-06-20T15:30:00Z",
+                        "endDate": "2024-06-20T15:30:00Z",
+                        "description": "A challenge to test your web development skills.",
+                        "imgUrl": "https://example.com/images/challenge1.png",
+                        "skills": [
+                          {
+                            "id": 101,
+                            "name": "JavaScript"
+                          },
+                          {
+                            "id": 102,
+                            "name": "React"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 2,
+                        "name": "Data Science Challenge",
+                        "startDate": "2024-06-20T15:30:00Z",
+                        "endDate": "2024-06-20T15:30:00Z",
+                        "description": "A challenge to test your data science skills.",
+                        "imgUrl": "https://example.com/images/challenge2.png",
+                        "skills": [
+                          {
+                            "id": 103,
+                            "name": "Python"
+                          },
+                          {
+                            "id": 104,
+                            "name": "Machine Learning"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/public/landing/faq": {
+        "get": {
+          "tags": ["Landing"],
+          "summary": "Landing page data",
+          "description": "Retrieve all data needed for the landing page",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get all data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "question": {
+                              "type": "string"
+                            },
+                            "answer": {
+                                "type": "string"
+                            }
+                            
+                        }
+                      }
+                      }
+                    }
+                  },
+                  "example": {
+                    "": [
+                      {
+                        "id": 1,
+                        "question": "What is Aguna Edu?",
+                        "answer": "Aguna Edu is an online learning platform that offers courses in various fields."
+                      },
+                      {
+                        "id": 2,
+                        "question": "How do I enroll in a course?",
+                        "answer": "To enroll in a course, simply click on the course you want to take and follow the instructions to sign up."
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/public/login": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "User Login",
+          "description": "This endpoint is used for user authentication. Users must submit a valid email and password to receive an authentication token. This token should be used to access other endpoints that require authentication.",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "maxLength": 100
+                    },
+                    "password": {
+                      "type": "string",
+                      "maxLength": 100
+                    }
+                  },
+                  "required": ["email", "password"],
+                  "example": {
+                    "email": "aguna@edu.com",
+                    "password": "*******"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Authentication success. The user has been authenticated and a token has been returned.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "Login successful."
+                      },
+                      "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Authentication failed. The email or password provided is incorrect.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Autentikasi failed. Please check email or password."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/public/register": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "User register",
+          "description": "Resgister new user",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    },
+                    "universities": {
+                      "type": "string"
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": ["name", "email", "username", "password"],
+                  "example": {
+                    "name": "Joko Doe",
+                    "email": "joko@aguna.com",
+                    "username": "joko",
+                    "password": "securepassword123",
+                    "phoneNumber": "1234567890123",
+                    "universities": "Jogja University",
+                    "skills": [1, 2]
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User successfully registered",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "User successfully registered."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Username already registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/request-password-reset": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "Request password reset",
+          "description": "Send a password reset token to user's email",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "maxLength": 100
+                    }
+                  },
+                  "required": ["email"],
+                  "example": {
+                    "email": "user@example.com"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Password reset token sent",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "Password reset token has been sent to your email."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "User not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/reset-password": {
+        "patch": {
+          "tags": ["Authentication"],
+          "summary": "Reset password",
+          "description": "Reset user's password using the reset token",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string",
+                      "maxLength": 100
+                    }
+                  },
+                  "required": ["token", "password"],
+                  "example": {
+                    "token": "abcdef123456",
+                    "password": "newpassword"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Password reset successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string",
+                        "example": "Password has been reset successfully."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid token or expired",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Invalid or expired token."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      
+  
+      "/role/{roleId}": {
+        "get": {
+          "tags": ["Course"],
+          "summary": "Get existing role",
+          "description": "Retrieve the details of a specific role including its paths and path focuses.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/roleId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success get data existing role",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "paths": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "pathFocus": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "imgUrl": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "test": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "status": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "paths": [
+                        {
+                          "id": 101,
+                          "name": "Mobile Development",
+                          "pathFocus": [
+                            {
+                              "id": 201,
+                              "name": "Front End",
+                              "imgUrl": "https://example.com/frontend.png"
+                            },
+                            {
+                              "id": 202,
+                              "name": "Back End",
+                              "imgUrl": "https://example.com/backend.png"
+                            }
+                          ]
+                        },
+                        {
+                          "id": 102,
+                          "name": "Web Development",
+                          "pathFocus": [
+                            {
+                              "id": 203,
+                              "name": "Full Stack",
+                              "imgUrl": "https://example.com/fullstack.png"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Role not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/path/{pathId}": {
+        "get": {
+          "tags": ["Course"],
+          "summary": "Get existing path",
+          "description": "Retrieve the details of a specific path including its path focuses and courses.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/pathId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success get data existing path",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "pathFocus": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "course": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "level": {
+                                    "type": "string"
+                                  },
+                                  "totoalStudent": {
+                                    "type": "number"
+                                  },
+                                  "imgUrl": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "pathFocus": [
+                        {
+                          "id": 1,
+                          "name": "Front End",
+                          "course": [
+                            {
+                              "id": 101,
+                              "name": "Introduction to HTML",
+                              "level": "Beginner",
+                              "totalStudent": 1500,
+                              "imgUrl": "https://example.com/html.png"
+                            },
+                            {
+                              "id": 102,
+                              "name": "Advanced CSS",
+                              "level": "Intermediate",
+                              "totalStudent": 1200,
+                              "imgUrl": "https://example.com/css.png"
+                            }
+                          ]
+                        },
+                        {
+                          "id": 2,
+                          "name": "Back End",
+                          "course": [
+                            {
+                              "id": 103,
+                              "name": "Node.js Basics",
+                              "level": "Beginner",
+                              "totalStudent": 800,
+                              "imgUrl": "https://example.com/nodejs.png"
+                            },
+                            {
+                              "id": 104,
+                              "name": "Database Design",
+                              "level": "Intermediate",
+                              "totalStudent": 600,
+                              "imgUrl": "https://example.com/database.png"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Path not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/path/focus/{pathFocusId}": {
+        "get": {
+          "tags": ["Course"],
+          "summary": "Get existing focus path",
+          "description": "Retrieve the details of a specific path focus including its courses.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/pathFocusId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success get data existing path focus",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "courses": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "level": {
+                              "type": "string"
+                            },
+                            "totalStudent": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "mentors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "job": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "courses": [
+                        {
+                          "id": 301,
+                          "name": "Introduction to JavaScript",
+                          "description": "Learn the basics of JavaScript, the most popular programming language.",
+                          "level": "Beginner",
+                          "totalStudent": 2000,
+                          "imgUrl": "https://example.com/javascript.png"
+                        },
+                        {
+                          "id": 302,
+                          "name": "Advanced React",
+                          "description": "Deep dive into React with hooks, context API, and advanced patterns.",
+                          "level": "Advanced",
+                          "totalStudent": 1500,
+                          "imgUrl": "https://example.com/react.png"
+                        }
+                      ],
+                      "mentors": [
+                        {
+                          "id": 401,
+                          "name": "John Doe",
+                          "job": "Senior Front End Developer",
+                          "imgUrl": "https://example.com/john.png"
+                        },
+                        {
+                          "id": 402,
+                          "name": "Jane Smith",
+                          "job": "Full Stack Developer",
+                          "imgUrl": "https://example.com/jane.png"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Path focus not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/course/{courseId}": {
+        "get": {
+          "tags": ["Course"],
+          "summary": "Get all existing course",
+          "description": "Retrieve the details of a specific course.",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/courseId"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success get data existing role",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "course": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "metode": {
+                            "type": "string"
+                          },
+                          "totalMaterial": {
+                            "type": "number"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "status": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "mentor": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "job": {
+                            "type": "string"
+                          },
+                          "university": {
+                            "type": "string"
+                          },
+                          "skills": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "number"
+                                },
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "imgUrl": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "course": {
+                        "id": 501,
+                        "name": "Web Development Bootcamp",
+                        "skills": [
+                          {
+                            "id": 601,
+                            "name": "HTML"
+                          },
+                          {
+                            "id": 602,
+                            "name": "CSS"
+                          },
+                          {
+                            "id": 603,
+                            "name": "JavaScript"
+                          }
+                        ],
+                        "method": "Daring",
+                        "totalMaterial": 20,
+                        "price": 99.99
+                      },
+                      "mentor": {
+                        "id": 701,
+                        "name": "John Doe",
+                        "job": "Senior Full Stack Developer",
+                        "university": "Stanford University",
+                        "skills": [
+                          {
+                            "id": 602,
+                            "name": "CSS"
+                          },
+                          {
+                            "id": 603,
+                            "name": "JavaScript"
+                          },
+                          {
+                            "id": 604,
+                            "name": "Node.js"
+                          }
+                        ],
+                        "imgUrl": "https://example.com/john.png"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Course not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/test/{testId}": {
+        "get": {
+          "tags": ["Test"],
+          "summary": "Get detail test",
+          "description": "Retrieve the details of a specific test.",
+          "parameters": [],
+          "responses": {  
+            "200": {
+              "description": "Success get data test",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "duration": {
+                        "type": "number"
+                      },
+                      "totalQuestion": {
+                        "type": "number"
+                      }
+                    },
+                    "example": {
+                      "id": 101,
+                      "name": "Sample Test",
+                      "description": "This is a sample test for demonstration purposes.",
+                      "skills": [
+                        {
+                          "id": 201,
+                          "name": "HTML"
+                        },
+                        {
+                          "id": 202,
+                          "name": "CSS"
+                        },
+                        {
+                          "id": 203,
+                          "name": "JavaScript"
+                        }
+                      ],
+                      "duration": 60,
+                      "totalQuestion": 20
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Test not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/test/{testId}/start": {
+        "get": {
+          "tags": ["Test"],
+          "summary": "Start test",
+          "description": "Retrieve the details of a specific test including its path question and answer.",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data existing test",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "duration": {
+                        "type": "number"
+                      },
+                      "totalQuestion": {
+                        "type": "number"
+                      },
+                      "question": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "idQuestion": {
+                              "type": "number"
+                            },
+                            "question": {
+                              "type": "string"
+                            },
+                            "answer": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "idQuestion": {
+                                    "type": "number"
+                                  },
+                                  "answer": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "id": 101,
+                      "duration": 60,
+                      "totalQuestion": 20,
+                      "question": [
+                        {
+                          "idQuestion": 1,
+                          "question": "What is the capital of France?",
+                          "answer": [
+                            {
+                              "idAnswer": 1,
+                              "answer": "Paris"
+                            },
+                            {
+                              "idAnswer": 2,
+                              "answer": "London"
+                            },
+                            {
+                              "idAnswer": 3,
+                              "answer": "Berlin"
+                            },
+                            {
+                              "idAnswer": 4,
+                              "answer": "Rome"
+                            }
+                          ]
+                        },
+                        {
+                          "idQuestion": 2,
+                          "question": "Who wrote the play 'Hamlet'?",
+                          "answer": [
+                            {
+                              "idAnswer": 5,
+                              "answer": "William Shakespeare"
+                            },
+                            {
+                              "idAnswer": 6,
+                              "answer": "Charles Dickens"
+                            },
+                            {
+                              "idAnswer": 7,
+                              "answer": "Jane Austen"
+                            },
+                            {
+                              "idAnswer": 8,
+                              "answer": "Mark Twain"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Test not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Test"],
+          "summary": "Sumbit test and get score",
+          "description": "",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idTest": {
+                      "type": "number"
+                    },
+                    "answers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "questionId": {
+                            "type": "number"
+                          },
+                          "answerId": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Success submit answer",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "correctAnswers": {
+                        "type": "number"
+                      },
+                      "wrongAnswers": {
+                        "type": "number"
+                      },
+                      "totalScore": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Failed "
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/event": {
+        "get": {
+          "tags": ["Event"],
+          "summary": "Get all event",
+          "description": "Retrieve a list of all events.",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes get data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "events": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "timestamp": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                              "type": "string"
+                            },
+                            "skills": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "example": {
+                            "events": [
+                              {
+                                "id": 1,
+                                "name": "Web Development Workshop",
+                                "timestamp": "2024-06-20T15:30:00Z",
+                                "description": "An in-depth workshop on modern web development practices.",
+                                "imgUrl": "https://example.com/images/event1.png",
+                                "skills": [
+                                  {
+                                    "id": 101,
+                                    "name": "JavaScript"
+                                  },
+                                  {
+                                    "id": 102,
+                                    "name": "React"
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 2,
+                                "name": "Data Science Seminar",
+                                "timestamp": "2024-07-15T10:00:00Z",
+                                "description": "A seminar focusing on the latest trends in data science.",
+                                "imgUrl": "https://example.com/images/event2.png",
+                                "skills": [
+                                  {
+                                    "id": 103,
+                                    "name": "Python"
+                                  },
+                                  {
+                                    "id": 104,
+                                    "name": "Machine Learning"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "event not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/event/{eventId}": {
+        "get": {
+          "tags": ["Event"],
+          "summary": "Get detail existing event",
+          "description": "Retrieve the details of a specific event.",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "imgUrl": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "organizer": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      },
+                      "speakers": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                              "type": "string"
+                            },
+                            "job": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "id": 1,
+                      "name": "Web Development Workshop",
+                      "imgUrl": "https://example.com/images/event1.png",
+                      "description": "An in-depth workshop on modern web development practices.",
+                      "timestamp": "2024-06-20T15:30:00Z",
+                      "organizer": "Tech Community",
+                      "location": "Tech Hub, Silicon Valley",
+                      "speakers": [
+                        {
+                          "id": 101,
+                          "name": "John Doe",
+                          "imgUrl": "https://example.com/images/speaker1.png",
+                          "job": "Senior Developer at Tech Corp"
+                        },
+                        {
+                          "id": 102,
+                          "name": "Jane Smith",
+                          "imgUrl": "https://example.com/images/speaker2.png",
+                          "job": "Lead Designer at Creative Studio"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "event not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/challenge": {
+        "get": {
+          "tags": ["Challenge"],
+          "summary": "Get all challenge",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "challenges": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "imgUrl": {
+                              "type": "string"
+                            },
+                            "start": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "end": {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            "skills": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "example": {
+                            "challenges": [
+                              {
+                                "id": 1,
+                                "name": "Code Sprint",
+                                "imgUrl": "https://example.com/images/challenge1.png",
+                                "start": "2024-06-01",
+                                "end": "2024-06-15",
+                                "skills": [
+                                  {
+                                    "id": 101,
+                                    "name": "JavaScript"
+                                  },
+                                  {
+                                    "id": 102,
+                                    "name": "HTML"
+                                  }
+                                ]
+                              },
+                              {
+                                "id": 2,
+                                "name": "UI/UX Design Challenge",
+                                "imgUrl": "https://example.com/images/challenge2.png",
+                                "start": "2024-07-01",
+                                "end": "2024-07-20",
+                                "skills": [
+                                  {
+                                    "id": 103,
+                                    "name": "UI Design"
+                                  },
+                                  {
+                                    "id": 104,
+                                    "name": "UX Research"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "challenge not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/challenge/{challengeId}": {
+        "get": {
+          "tags": ["Challenge"],
+          "summary": "Get detail existing challenge",
+          "description": "",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "imgUrl": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "start": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "end": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example": {
+                      "id": 1,
+                      "name": "Code Sprint",
+                      "imgUrl": "https://example.com/images/challenge1.png",
+                      "start": "2024-06-01",
+                      "description": "AAAAA",
+                      "end": "2024-06-15",
+                      "skills": [
+                        {
+                          "id": 101,
+                          "name": "JavaScript"
+                        },
+                        {
+                          "id": 102,
+                          "name": "HTML"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "challenge not found."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Challenge"],
+          "summary": "Sumbit submission challenge",
+          "description": "",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "number",
+                      "description": "ID of the user submitting the challenge"
+                    },
+                    "linkUrl": {
+                      "type": "string",
+                      "description": "URL of the submission"
+                    }
+                  },
+                  "required": ["userId", "linkUrl"],
+                  "example": {
+                    "userId": 1,
+                    "linkUrl": "https://example.com/submission/1"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Submission created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "challengeId": {
+                        "type": "number"
+                      },
+                      "userId": {
+                        "type": "number"
+                      },
+                      "linkUrl": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "challengeId": 1,
+                      "userId": 1,
+                      "linkUrl": "https://example.com/submission/1"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Invalid input data"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+    "/leaderboard": {
+
+    },
+  
+    "/cekpromo": {
+        "post": {
+          "tags": ["Transaction"],
+          "summary": "Check promo and reduce total price if applicable",
+          "description": "",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "promoCode": {
+                      "type": "string"
+                    },
+                    "totalPrice": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Promo successfully applied",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "discountAmount": {
+                        "type": "number"
+                      },
+                      "newTotalPrice": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "example": {
+                    "discountAmount": 50000,
+                    "newTotalPrice": 1000000
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Promo not applicable",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Promo not applicable."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      
+  
+      "/transaction/course/{courseId}": {
+        "get": {
+          "tags": ["Transaction"],
+          "summary": "Course transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/courseId"
+            }
+          ],
+          "responses": {
+            "200":{
+              "description": "-",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "properties": {
+                      "course": {
+                        "type": "object",
+                        "properties": {
+                          "id":{
+                            "type": "number"
+                          },
+                          "name":{
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "bank":{
+                        "type": "array",
+                        "items":{
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "no": {
+                                    "type": "string"
+                                  }
+                            }
+                          
+                        }
+                      },
+                      "servicePrice":{
+                        "type": "number"
+                      },
+                      "totalPrice": {
+                        "type": "number"
+                      }
+                    },
+                    "example": {
+                      "course": {
+                        "id": 1,
+                        "name": "Kursus Pemrograman",
+                        "price": 1000000
+                      },
+                      "bank":[ {
+                        "id": 1,
+                        "name": "Bank ABC",
+                        "no": "1234567890"
+                      }],
+                      "servicePrice": 50000,
+                      "totalPrice": 1050000
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Transaction failed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "transaction failed."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Transaction"],
+          "summary": "Course transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/courseId"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idUser":{
+                      "type": "number"
+                    },
+                    "idCourse":{
+                      "type": "number"
+                    },
+                    "idPromo":{
+                      "type": "number"
+                    },
+                    "idBank":{
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "servicePrice": {
+                      "type": "number"
+                    },
+                    "totalPrice": {
+                      "type": "number"
+                    }
+  
+                  },
+                  "example": {
+                    "idUser": 1,
+                    "idCourse": 1,
+                    "idPromo": 2,
+                    "idBank": 1,
+                    "price": 1000000,
+                    "servicePrice": 50000,
+                    "totalPrice": 1050000
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Transaction success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "idTrans": {
+                        "type": "number"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "idTrans": 12212331,
+                      "message": "Transaction success"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Failed "
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+  
+  
+      "/transaction/event/{eventId}": {
+        "get": {
+          "tags": ["Transaction"],
+          "summary": "Event transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/eventId"
+            }
+          ],
+          "responses": {
+            "200":{
+              "description": "-",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "properties": {
+                      "event": {
+                        "type": "object",
+                        "properties": {
+                          "id":{
+                            "type": "number"
+                          },
+                          "name":{
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "bank":{
+                        "type": "object",
+                        "properties":{
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "no": {
+                              "type": "string"
+                            }
+                          
+                        }
+                      },
+                      "servicePrice":{
+                        "type": "number"
+                      },
+                      "totalPrice": {
+                        "type": "number"
+                      }
+                    },
+                    "example": {
+                      "event": {
+                        "id": 1,
+                        "name": "React 101",
+                        "price": 1000000
+                      },
+                      "bank": {
+                        "id": 1,
+                        "name": "Bank ABC",
+                        "no": "1234567890"
+                      },
+                      "servicePrice": 50000,
+                      "totalPrice": 1050000
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Transaction failed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "transaction failed."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Transaction"],
+          "summary": "Event transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/eventId"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idUser":{
+                      "type": "number"
+                    },
+                    "idEvent":{
+                      "type": "number"
+                    },
+                    "idPromo":{
+                      "type": "number"
+                    },
+                    "idBank":{
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "servicePrice": {
+                      "type": "number"
+                    },
+                    "totalPrice": {
+                      "type": "number"
+                    }
+  
+                  },
+                  "example": {
+                    "idUser": 1,
+                    "idEvent": 1,
+                    "idPromo": 2,
+                    "idBank": 1,
+                    "price": 1000000,
+                    "servicePrice": 50000,
+                    "totalPrice": 1050000
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Transaction success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "idTrans": {
+                        "type": "number"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "idTrans": 12212331,
+                      "message": "Transaction success"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Failed "
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/transaction/mentoring/{mentorId}": {
+        "get": {
+          "tags": ["Transaction"],
+          "summary": "Event transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/mentorId"
+            }
+          ],
+          "responses": {
+            "200":{
+              "description": "-",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "properties": {
+                      "course": {
+                        "type": "object",
+                        "properties": {
+                          "id":{
+                            "type": "number"
+                          },
+                          "name":{
+                            "type": "string"
+                          },
+                          "mentor": {
+                            "type": "object",
+                            "properties": {
+                              "id":{
+                                "type": "number"
+                              },
+                              "name":{
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "price": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "bank":{
+                        "type": "object",
+                        "properties":{
+                            "id": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "no": {
+                              "type": "string"
+                            }
+                          
+                        }
+                      },
+                      "servicePrice":{
+                        "type": "number"
+                      },
+                      "totalPrice": {
+                        "type": "number"
+                      }
+                    },
+                    "example": {
+                      "course": {
+                        "id": 1,
+                        "name": "Front-End Web dengan Js",
+                        "mentor": {
+                          "id": 1,
+                          "name": "John Doe"
+                        },
+                        "price": 1000000
+                      },
+                      "bank": {
+                        "id": 1,
+                        "name": "Bank ABC",
+                        "no": "1234567890"
+                      },
+                      "servicePrice": 50000,
+                      "totalPrice": 1050000
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Transaction failed",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "transaction failed."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Transaction"],
+          "summary": "Mentor transaction",
+          "description": "",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/mentorId"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idUser":{
+                      "type": "number"
+                    },
+                    "idMentor":{
+                      "type": "number"
+                    },
+                    "idPromo":{
+                      "type": "number"
+                    },
+                    "idBank":{
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "servicePrice": {
+                      "type": "number"
+                    },
+                    "totalPrice": {
+                      "type": "number"
+                    }
+  
+                  },
+                  "example": {
+                    "idUser": 1,
+                    "idMentor": 1,
+                    "idPromo": 2,
+                    "idBank": 1,
+                    "price": 1000000,
+                    "servicePrice": 50000,
+                    "totalPrice": 1050000
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Transaction success",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "idTrans": {
+                        "type": "number"
+                      },
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "example": {
+                      "idTrans": 12212331,
+                      "message": "Transaction success"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "Failed "
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+  
+      "/admin/dashboard": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all dashboard data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/mente": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all mente data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/mente/{menteId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing mente",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing mente",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing mente",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/mentor": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all mentor data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/mentor/{mentorId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing mentor",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing mentor",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing mentor",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/event": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all event data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add event",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add event",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/event/{eventId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing event",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing event",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing event",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/challenge": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all challenge data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/challenge/{challengeId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing challenge",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing challenge",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing challenge",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/submission/{submissionId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing submission",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Give score existing submission",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/transaction": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all transaction data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/transaction/{transactionId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing transaction",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit/ review existing transaction",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/learning": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all learning data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/admin/role": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all role data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add role",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add role",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/role/{roleId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing role",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing role",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing role",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/path": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all path data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add path",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add path",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/path/{pathId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing path",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing path",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing path",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/path-focus": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all path focus data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add path focus",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add path focus",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/path-focus/{pathFocusId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing path focus",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing path focus",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing path focus",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/course": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all course data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add course",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add course",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/course/{courseId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing course",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing course",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing course",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/admin/material": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get all material data",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "post": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Add material",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "201": {
+              "description": "Success add material",
+              "content": {}
+            }
+          }
+        }
+      },
+  
+      "/admin/material/{materialId}": {
+        "get": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Get detail existing material",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Success get data",
+              "content": {}
+            },
+            "404": {
+              "description": "Data not found",
+              "content": {}
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Edit data existing material",
+          "description": "-",
+          "parameters": [],
+          "requestBody": {},
+          "responses": {
+            "200": {
+              "description": "Success edit data",
+              "content": {}
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Dashboard", "Admin"],
+          "summary": "Delete existing material",
+          "description": "-",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Succes delete data",
+              "content": {}
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "parameters": {
+        "roleId": {
+          "name": "roleId",
+          "in": "path",
+          "required": true,
+          "description": "Role Id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "hustler": {
+              "description": "Sample role id for hustler",
+              "value": "1"
+            },
+            "hacker": {
+              "description": "Sample role id for hacker",
+              "value": "2"
+            },
+            "hipster": {
+              "description": "Sample role id for hipster",
+              "value": "3"
+            }
+          }
+        },
+  
+        "pathId": {
+          "name": "pathId",
+          "in": "path",
+          "required": true,
+          "description": "Path id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "Mobile Dev": {
+              "description": "Sample path id for Mobile dev",
+              "value": "1"
+            },
+            "Web Dev": {
+              "description": "Sample path id for Web dev",
+              "value": "2"
+            },
+            "Manchine Learning": {
+              "description": "Sample path id for Manchine Learning",
+              "value": "3"
+            }
+          }
+        },
+  
+        "pathFocusId": {
+          "name": "pathFocusId",
+          "in": "path",
+          "required": true,
+          "description": "Path focus id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "Front End": {
+              "description": "Sample path id for front end",
+              "value": "1"
+            },
+            "Back End": {
+              "description": "Sample path id for back end",
+              "value": "2"
+            },
+            "Full Stack": {
+              "description": "Sample path id for full stack",
+              "value": "3"
+            }
+          }
+        },
+  
+        "courseId": {
+          "name": "courseId",
+          "in": "path",
+          "required": true,
+          "description": "Course id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "Front-End Web dengan Js": {
+              "description": "Sample course id",
+              "value": "1"
+            },
+            "Advanced JavaScript Concepts": {
+              "description": "Sample course id",
+              "value": "2"
+            },
+            "React Native: Build Mobile Apps with JavaScript": {
+              "description": "Sample course id",
+              "value": "3"
+            }
+          }
+        },
+  
+        "eventId": {
+          "name": "eventId",
+          "in": "path",
+          "required": true,
+          "description": "Event id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "Webinar Teknologi 2024": {
+              "summary": "Webinar Teknologi 2024",
+              "description": "Sample event id",
+              "value": "1"
+            },
+            "Konferensi Startup 2024": {
+              "summary": "Konferensi Startup 2024",
+              "description": "Sample event id",
+              "value": "2"
+            },
+            "Hackathon AI 2024": {
+              "summary": "Hackathon AI 2024",
+              "description": "Sample event id",
+              "value": "3"
+            }
+          }
+        },
+  
+        "mentorId": {
+          "name": "mentorId",
+          "in": "path",
+          "required": true,
+          "description": "Mentor id for detail data",
+          "schema": {
+            "type": "string"
+          },
+          "examples": {
+            "Joko": {
+              "description": "Sample mentor id",
+              "value": "1"
+            },
+            "Jane": {
+              "description": "Sample mentor id",
+              "value": "2"
+            },
+            "Lord": {
+              "description": "Sample mentor id",
+              "value": "3"
+            }
+          }
+        }
+      }
+    }
+  }
+  
