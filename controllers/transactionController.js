@@ -74,8 +74,9 @@ const getCourseTransaction = async (req, res) => {
 
 const createCourseTransaction = async (req, res) => {
     const { courseId } = req.params;
-    const userId  = req.user.userId;
-    const { price, serviceFee, totalPrice, promoCode, bankId } = req.body;
+    // const userId  = req.user.userId;
+
+    const { price, serviceFee, totalPrice, promoCode, bankId, userId } = req.body;
 
     try {
         await pool.query('START TRANSACTION');
@@ -105,8 +106,40 @@ const createCourseTransaction = async (req, res) => {
 
 };
 
+const getTransactionDetails = async (req, res) => {
+    // const userId = req.user.userId; 
+    const userId = 4;
+    const {transactionId} = req.params;
+  
+    try {
+      const [transaction] = await pool.query(`
+        SELECT 
+        t.id AS transactionId, 
+        t.date, 
+        t.paymentDeadline, 
+        d.totalPrice,
+        t.status,
+        b.No AS bankNo
+      FROM transaction t
+      JOIN detailTransaction d ON t.id = d.transactionId
+      JOIN bank b ON d.bankId = b.id
+      WHERE t.id = ? AND t.userId = ?
+    `, [transactionId, userId]);
+  
+      console.log(transaction);
+      if (transaction.length === 0) {
+        return res.status(404).json({ message: 'Transaction not found.' });
+      }
+  
+      res.json(transaction[0]);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
 module.exports = {
     checkPromo,
     getCourseTransaction,
-    createCourseTransaction
+    createCourseTransaction,
+    getTransactionDetails
 }; 

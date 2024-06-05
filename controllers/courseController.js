@@ -14,7 +14,7 @@ const getDataLanding = async (req, res) => {
             JSON_OBJECT(
                 'id', p.id,
                 'name', p.name,
-                'imageurl', p.imageUrl,
+                'imageUrl', p.imageUrl,
                 'description', p.description,
                 'totalStudent', COALESCE(ts.total_student, 0)
             )
@@ -300,7 +300,7 @@ const getMentorDetailsByCourseId = async (req, res) => {
         u.email AS mentorEmail,
         u.phoneNumber AS mentorPhoneNumber,
         u.universities AS mentorUniversities,
-        u.imageUrl AS mentorImageProfile,
+        u.imageUrl AS mentorImageUrl,
         u.point AS mentorPoint,
         u.role AS mentorRole,
         m.job AS mentorJob

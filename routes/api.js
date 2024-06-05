@@ -56,7 +56,9 @@ router.get('/challenge/:id',  challengeController.getChallengeById);
 router.post('/challenge/:id',  challengeController.submitChallenge);
 
 router.post('/cekpromo',  transactionController.checkPromo);
+router.post('/transaction/course/:courseId',  transactionController.createCourseTransaction);
 router.get('/transaction/course/:courseId',  transactionController.getCourseTransaction);
+router.get('/payment/:transactionId',  transactionController.getTransactionDetails);
 
 router.post('/tools', upload.single('image'), toolsController.createTools);
 

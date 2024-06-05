@@ -30,7 +30,7 @@ const getEvents = async (req, res) => {
 const getEventById = async (req, res) => {
     const { id } = req.params;
     try {
-        const [events] = await pool.query(`
+        const [data] = await pool.query(`
         SELECT
                 e.id AS id,
                 e.title AS name,
@@ -61,11 +61,20 @@ const getEventById = async (req, res) => {
     
         `, [id]);
 
-        if (events.length === 0) {
+        if (data.length === 0) {
             return res.status(404).json({ message: 'Event not found' });
         }
 
-        res.json(events[0]);
+        const event = data.map((item) => ({
+            ...item,
+            skills: [...new Set(item.skills.map((skill => JSON.stringify(skill))))]
+            .map((skill) => JSON.parse(skill)),   
+            speakers: [...new Set(item.speakers.map((speaker => JSON.stringify(speaker))))]
+            .map((speaker) => JSON.parse(speaker))
+        }));
+            
+
+        res.json(event);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
