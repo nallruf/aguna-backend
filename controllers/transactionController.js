@@ -72,11 +72,57 @@ const getCourseTransaction = async (req, res) => {
 
 };
 
+
+const getEventTransaction = async (req, res) => {
+    try{
+        const { courseId } = req.params;
+
+        const [courseRows] = await pool.query(`
+            SELECT c.id AS courseId, c.name AS courseName, c.price AS coursePrice
+            FROM course c
+            WHERE c.id = ?
+        `, [courseId]);
+
+        if (courseRows.length === 0) {
+            return res.status(404).json({ error: 'Course not found' });
+        };
+
+        const course = courseRows[0];
+
+        const [bankRows] = await pool.query(`
+            SELECT b.id AS bankId, b.name AS bankName, b.no AS bankNo, b.imageUrl AS bankImageUrl
+            FROM bank b
+            WHERE b.tag = 'AGUNA'
+        `);
+
+        const servicePrice = 50000;
+        const totalPrice = course.coursePrice + servicePrice;
+
+        const response = {
+            course: {
+                id: course.courseId,
+                name: course.courseName,
+                price: course.coursePrice
+            },
+            bank: bankRows,
+            servicePrice: servicePrice,
+            totalPrice: totalPrice
+        };
+
+        return res.status(200).json(response);
+        
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+
+};
+
+
 const createCourseTransaction = async (req, res) => {
     const { courseId } = req.params;
-    // const userId  = req.user.userId;
+    const userId  = req.user.userId;
 
-    const { price, serviceFee, totalPrice, promoCode, bankId, userId } = req.body;
+    const { price, serviceFee, totalPrice, promoCode, bankId } = req.body;
 
     try {
         await pool.query('START TRANSACTION');
@@ -106,9 +152,9 @@ const createCourseTransaction = async (req, res) => {
 
 };
 
-const getTransactionDetails = async (req, res) => {
-    // const userId = req.user.userId; 
-    const userId = 4;
+const getPaymentDetails = async (req, res) => {
+    const userId = req.user.userId; 
+    // const userId = 4;
     const {transactionId} = req.params;
   
     try {
@@ -137,9 +183,52 @@ const getTransactionDetails = async (req, res) => {
     }
   };
 
+const uploadPayment = async (req, res) => {
+    const userId = req.user.userId;
+    // const userId = 4;
+    const { transactionId } = req.params;
+    const image  = req.file ? req.file.filename : null;
+  
+    try {
+
+        await pool.query('START TRANSACTION');
+
+        const [upload] = await pool.query(`
+            UPDATE detailTransaction
+            SET imageUrl = ?
+            WHERE transactionId = ?
+        `,[image, transactionId]);
+
+        const [transaction] = await pool.query(`
+            UPDATE transaction
+            SET status = 'PENDING'
+            WHERE id = ? AND userId = ?
+        `, [transactionId, userId]
+        );
+
+        if (upload.affectedRows === 0 || transaction.affectedRows === 0) {
+            await pool.query('ROLLBACK');
+            return res.status(404).json({ message: 'Payment failed' });
+        }
+
+        await pool.query('COMMIT');
+        
+  
+        
+      res.json({
+        status: "Success", 
+        message: 'Payment proof uploaded successfully',
+     });
+    } catch (error) {
+        await pool.query('ROLLBACK');
+      res.status(500).json({ error: error.message });
+    }
+  };
+
 module.exports = {
     checkPromo,
     getCourseTransaction,
     createCourseTransaction,
-    getTransactionDetails
+    getPaymentDetails,
+    uploadPayment
 }; 

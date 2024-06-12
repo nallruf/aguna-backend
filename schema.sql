@@ -224,33 +224,33 @@ CREATE TABLE testimoni (
   FOREIGN KEY (userId) REFERENCES users(id)
 );
 
-CREATE TABLE transaction (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  date DATETIME,
-  paymentDeadline DATETIME,
-  type ENUM('COURSE', 'MENTORING', 'EVENT'),
-  status ENUM('ACCEPT', 'REJECT', 'PENDING', 'UNPAID') DEFAULT 'UNPAID',
-  courseId INT NULL,
-  eventId INT NULL,
-  userId INT,
-  FOREIGN KEY (courseId) REFERENCES course(id),
-  FOREIGN KEY (eventId) REFERENCES event(id),
-  FOREIGN KEY (userId) REFERENCES users(id)
-);
+  CREATE TABLE transaction (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATETIME,
+    paymentDeadline DATETIME,
+    type ENUM('COURSE', 'MENTORING', 'EVENT'),
+    status ENUM('ACCEPT', 'REJECT', 'PENDING', 'UNPAID') DEFAULT 'UNPAID',
+    courseId INT NULL,
+    eventId INT NULL,
+    userId INT,
+    FOREIGN KEY (courseId) REFERENCES course(id),
+    FOREIGN KEY (eventId) REFERENCES event(id),
+    FOREIGN KEY (userId) REFERENCES users(id)
+  );
 
-CREATE TABLE detailTransaction (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  transactionId INT UNIQUE,
-  price FLOAT,
-  serviceFee FLOAT,
-  promoId INT,
-  bankId INT,
-  totalPrice FLOAT,
-  imageUrl VARCHAR(100) NULL,
-  FOREIGN KEY (transactionId) REFERENCES transaction(id),
-  FOREIGN KEY (bankId) REFERENCES bank(id),
-  FOREIGN KEY (promoId) REFERENCES promo(id)
-);
+  CREATE TABLE detailTransaction (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    transactionId INT UNIQUE,
+    price FLOAT,
+    serviceFee FLOAT,
+    promoId INT,
+    bankId INT,
+    totalPrice FLOAT,
+    imageUrl VARCHAR(100) NULL,
+    FOREIGN KEY (transactionId) REFERENCES transaction(id),
+    FOREIGN KEY (bankId) REFERENCES bank(id),
+    FOREIGN KEY (promoId) REFERENCES promo(id)
+  );
 
 
 CREATE TABLE userCourse (

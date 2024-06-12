@@ -75,19 +75,34 @@ const getRoleById = async (req, res) => {
                 p.name AS pathName,
                 p.description AS pathDescription,
                 p.imageUrl AS pathImageUrl,
-                IFNULL(
-                    JSON_ARRAYAGG(
-                        JSON_OBJECT(
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
                             'pathFocusId', pf.id,
                             'pathFocusName', pf.name,
                             'pathFocusDescription', pf.description,
-                            'pathFocusImageUrl', pf.imageUrl
+                            'pathFocusImageUrl', pf.imageUrl,
+                            'totalCourse', COALESCE(tc.total_course, 0)
                         )
-                    ), JSON_ARRAY()) AS pathFocus
+                  ) AS pathFocus
+                  
             FROM
                 path p
             LEFT JOIN
                 pathFocus pf ON p.id = pf.pathId
+            LEFT JOIN
+                (
+                    SELECT
+                        pf.id AS pathFocusId,
+                        COUNT(DISTINCT c.id) AS total_course
+                    FROM
+                        pathFocus pf
+                    LEFT JOIN
+                        course c ON pf.id = c.pathFocusId
+                    GROUP BY
+                        pf.id
+                ) tc ON pf.id = tc.pathFocusId
+            LEFT JOIN
+                course c ON pf.id = c.pathFocusId
             WHERE
                 p.roleId = ?
             GROUP BY
@@ -122,7 +137,13 @@ const getRoleById = async (req, res) => {
       };
     });
 
-    res.json(result);
+    const uniqueData = result.map(item => ({
+      ...item,
+      pathFocus: [...new Set(item.pathFocus.map(pathFocus => JSON.stringify(pathFocus)))]
+        .map(pathFocus => JSON.parse(pathFocus))
+    }));
+
+    res.json(uniqueData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

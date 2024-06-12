@@ -74,7 +74,7 @@ const getEventById = async (req, res) => {
         }));
             
 
-        res.json(event);
+        res.json(event[0]);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
