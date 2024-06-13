@@ -97,6 +97,7 @@ CREATE TABLE course (
   name VARCHAR(100),
   description VARCHAR(300),
   price FLOAT,
+  method ENUM('Video', 'Text', 'Video dan Text'),
   level ENUM('BEGINNER', 'INTERMEDIATE', 'ADVANCE'),
   mentorId INT,
   FOREIGN KEY (pathFocusId) REFERENCES pathFocus(id),
@@ -163,10 +164,11 @@ CREATE TABLE challenge (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(100),
   imageUrl VARCHAR(100),
-  description VARCHAR(300),
+  shortDescription VARCHAR(100),
+  detailDescription VARCHAR(500),
   start DATETIME,
   end DATETIME,
-  winnerId INT
+  totalWinner INT
 );
 
 CREATE TABLE challengeSkills (
@@ -183,9 +185,11 @@ CREATE TABLE submission (
   challengeId INT,
   link VARCHAR(100),
   score INT DEFAULT 0,
+  isWinner BOOLEAN DEFAULT false,
   FOREIGN KEY (userId) REFERENCES users(id),
   FOREIGN KEY (challengeId) REFERENCES challenge(id)
 );
+
 
 CREATE TABLE speakers (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -197,7 +201,8 @@ CREATE TABLE speakers (
 CREATE TABLE event (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(100),
-  description VARCHAR(100),
+  shortDescription VARCHAR(100),
+  detailDescription VARCHAR(500),
   date DATETIME,
   time VARCHAR(100),
   organizer VARCHAR(100),
@@ -224,7 +229,7 @@ CREATE TABLE testimoni (
   FOREIGN KEY (userId) REFERENCES users(id)
 );
 
-  CREATE TABLE transaction (
+CREATE TABLE transaction (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATETIME,
     paymentDeadline DATETIME,
@@ -236,7 +241,7 @@ CREATE TABLE testimoni (
     FOREIGN KEY (courseId) REFERENCES course(id),
     FOREIGN KEY (eventId) REFERENCES event(id),
     FOREIGN KEY (userId) REFERENCES users(id)
-  );
+);
 
   CREATE TABLE detailTransaction (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -298,7 +303,6 @@ CREATE TABLE faq (
   question VARCHAR(100),
   answer VARCHAR(300)
 );
-
 
 CREATE TABLE eventSkills (
   eventId INT,

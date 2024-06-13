@@ -6,11 +6,12 @@ const getChallenges = async (req, res) => {
         SELECT
             c.id AS id,
             c.title AS name,
-            c.description AS description,
+            c.shortDescription AS shortDescription,
+            c.detailDescription AS detailDescription,
             c.imageUrl AS imageUrl,
             c.start AS startDate,
             c.end AS endDate,
-            c.winner AS winner,
+            c.totalWinner AS totalWinner,
             JSON_ARRAYAGG(
                 JSON_OBJECT('id', s.id, 'name', s.name)
             ) AS skills
@@ -34,11 +35,12 @@ const getChallengeById = async (req, res) => {
             SELECT
                 c.id AS id,
                 c.title AS name,
-                c.description AS description,
+                c.shortDescription AS shortDescription,
+                c.detailDescription AS detailDescription,
                 c.imageUrl AS imageUrl,
                 c.start AS startDate,
                 c.end AS endDate,
-                c.winner AS winner,
+                c.totalWinner AS totalWinner,
                 JSON_ARRAYAGG(
                     JSON_OBJECT('id', s.id, 'name', s.name)
                 ) AS skills

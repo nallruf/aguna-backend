@@ -8,7 +8,8 @@ const getEvents = async (req, res) => {
                 e.title AS name,
                 e.date AS date,
                 e.time AS time,
-                e.description AS description,
+                e.shortDescription AS shortDescription,
+                e.detailDescription AS detailDescription,
                 e.imageUrl AS imageUrl,
                 JSON_ARRAYAGG(
                     JSON_OBJECT('id', s.id, 'name', s.name)
@@ -36,7 +37,8 @@ const getEventById = async (req, res) => {
                 e.title AS name,
                 e.date AS date,
                 e.time AS time,
-                e.description AS description,
+                e.shortDescription AS shortDescription,
+                e.detailDescription AS detailDescription,
                 e.imageUrl AS imageUrl,
                 e.organizer AS organizer,
                 e.location AS location,

@@ -157,12 +157,14 @@ const getPathById = async (req, res) => {
         SELECT
             pf.id AS pathFocusId,
             pf.name AS pathFocusName,
+            pf.description AS pathFocusDescription,
             COALESCE(
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'courseId', c.id,
                         'courseName', c.name,
                         'courseLevel', c.level,
+                        'description', c.description,
                         'totalStudent', (
                             SELECT COUNT(*) 
                             FROM userCourse uc 
@@ -390,7 +392,11 @@ const getTestDetails = async (req, res) => {
                 t.name AS testName,
                 t.description AS testDescription,
                 t.duration AS testDuration,
-                COUNT(q.id) AS totalQuestion,
+                (
+                    SELECT COUNT(*)
+                    FROM testQuestion q
+                    WHERE q.testId = t.id
+                ) AS totalQuestion,
                 JSON_ARRAYAGG(
                     JSON_OBJECT('id', s.id, 'name', s.name)
                 ) AS skills
@@ -414,7 +420,13 @@ const getTestDetails = async (req, res) => {
       return res.status(404).json({ error: "Test not found" });
     }
 
-    res.json(rows[0]);
+    const uniqueData = rows.map(item => ({
+      ...item,
+      skills: [...new Set(item.skills.map(skill => JSON.stringify(skill)))]
+        .map(skill => JSON.parse(skill))
+    }));
+
+    res.json(uniqueData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -428,7 +440,11 @@ const getTestQuestions = async (req, res) => {
             SELECT 
                 t.id AS testId,
                 t.duration AS testDuration,
-                COUNT(q.id) OVER (PARTITION BY t.id) AS totalQuestion,
+                (
+                    SELECT COUNT(*)
+                    FROM testQuestion q
+                    WHERE q.testId = t.id
+                ) AS totalQuestion,
                 q.id AS questionId,
                 q.question AS questionText,
                 a.id AS answerId,
