@@ -208,7 +208,9 @@ CREATE TABLE event (
   organizer VARCHAR(100),
   imageUrl VARCHAR(100),
   location VARCHAR(100),
-  price FLOAT
+  price FLOAT,
+  type ENUM('ONLINE', 'OFFLINE'),
+  link VARCHAR(300)
 );
 
 CREATE TABLE eventSpeaker (
@@ -222,11 +224,9 @@ CREATE TABLE eventSpeaker (
 
 CREATE TABLE testimoni (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  courseId INT,
-  userId INT,
   quotes VARCHAR(300),
-  FOREIGN KEY (courseId) REFERENCES course(id),
-  FOREIGN KEY (userId) REFERENCES users(id)
+  userCourseId INT,
+  FOREIGN KEY (userCourseId) REFERENCES userCourse(id)
 );
 
 CREATE TABLE transaction (

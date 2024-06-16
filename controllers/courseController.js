@@ -285,6 +285,7 @@ const getCourseDetails = async (req, res) => {
                     WHERE cs.courseId = c.id
                 ) AS skills,
                 c.method AS method,
+                c.description AS description,
                 (
                     SELECT COUNT(*)
                     FROM material
@@ -312,7 +313,7 @@ const getCourseDetails = async (req, res) => {
 };
 
 const getMentorDetailsByCourseId = async (req, res) => {
-  const { courseId } = req.params;
+  const { courseId } = req.params;  
 
   try {
     const [mentor] = await pool.query(
@@ -448,7 +449,8 @@ const getTestQuestions = async (req, res) => {
                 q.id AS questionId,
                 q.question AS questionText,
                 a.id AS answerId,
-                a.answer AS answerText
+                a.answer AS answerText,
+                a.isCorrect AS isCorrect
             FROM 
                 test t
             LEFT JOIN 
@@ -472,6 +474,7 @@ const getTestQuestions = async (req, res) => {
           idQuestion: row.questionId,
           question: row.questionText,
           answers: [],
+          correctAnswer: row.isCorrect === 1 ? row.answerId : null,
         };
       }
       questionsMap[row.questionId].answers.push({

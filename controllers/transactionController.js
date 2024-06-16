@@ -75,19 +75,19 @@ const getCourseTransaction = async (req, res) => {
 
 const getEventTransaction = async (req, res) => {
     try{
-        const { courseId } = req.params;
+        const { eventId } = req.params;
 
-        const [courseRows] = await pool.query(`
-            SELECT c.id AS courseId, c.name AS courseName, c.price AS coursePrice
-            FROM course c
-            WHERE c.id = ?
-        `, [courseId]);
+        const [eventRows] = await pool.query(`
+            SELECT e.id AS eventId, e.title AS eventName, e.price AS eventPrice
+            FROM event e
+            WHERE e.id = ?
+        `, [eventId]);
 
-        if (courseRows.length === 0) {
-            return res.status(404).json({ error: 'Course not found' });
+        if (eventRows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
         };
 
-        const course = courseRows[0];
+        const event = eventRows[0];
 
         const [bankRows] = await pool.query(`
             SELECT b.id AS bankId, b.name AS bankName, b.no AS bankNo, b.imageUrl AS bankImageUrl
@@ -96,13 +96,13 @@ const getEventTransaction = async (req, res) => {
         `);
 
         const servicePrice = 50000;
-        const totalPrice = course.coursePrice + servicePrice;
+        const totalPrice = event.eventPrice + servicePrice;
 
         const response = {
             course: {
-                id: course.courseId,
-                name: course.courseName,
-                price: course.coursePrice
+                id: event.eventId,
+                name: event.eventName,
+                price: event.eventPrice
             },
             bank: bankRows,
             servicePrice: servicePrice,
@@ -152,6 +152,42 @@ const createCourseTransaction = async (req, res) => {
 
 };
 
+
+const createEventTransaction = async (req, res) => {
+    const { eventId } = req.params;
+    const userId  = req.user.userId;
+
+    const { price, serviceFee, totalPrice, promoCode, bankId } = req.body;
+
+    try {
+        await pool.query('START TRANSACTION');
+
+        const [transactionResult] = await pool.query(`
+            INSERT INTO transaction (date, paymentDeadline, type, status, eventId, userId)
+            VALUES (NOW(), DATE_ADD(NOW(), INTERVAL 1 DAY), 'EVENT', 'UNPAID', ?, ?)
+        `, [eventId, userId]);
+
+        const transactionId = transactionResult.insertId;
+
+        await pool.query(`
+            INSERT INTO detailTransaction (transactionId, price, serviceFee, totalPrice, bankId, promoId)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `, [transactionId, price, serviceFee, totalPrice, bankId, promoCode ? promoCode : null]);
+
+        await pool.query('COMMIT');
+
+        res.status(201).json({
+            message: 'Transaction created successfully',
+            transactionId,
+        });
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        res.status(500).json({ error: error.message });
+    }
+
+};
+
+
 const getPaymentDetails = async (req, res) => {
     const userId = req.user.userId; 
     // const userId = 4;
@@ -174,7 +210,7 @@ const getPaymentDetails = async (req, res) => {
   
       console.log(transaction);
       if (transaction.length === 0) {
-        return res.status(404).json({ message: 'Transaction not found.' });
+        return res.status(404).json({ userId: userId ,message: 'Transaction not found.' });
       }
   
       res.json(transaction[0]);
@@ -229,6 +265,8 @@ module.exports = {
     checkPromo,
     getCourseTransaction,
     createCourseTransaction,
+    getEventTransaction,
+    createEventTransaction,
     getPaymentDetails,
     uploadPayment
 }; 

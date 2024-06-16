@@ -9,8 +9,6 @@ const transactionController = require('../controllers/transactionController');
 const toolsController = require('../controllers/toolsController');
 
 const { upload } = require('../middlewares/multer');
-const { route } = require('.');
-// const { route } = require('.');
  
 
  
@@ -36,6 +34,8 @@ router.post('/challenge/:id', authMiddleware.verifyToken, challengeController.su
 router.post('/cekpromo', authMiddleware.verifyToken, transactionController.checkPromo);
 router.get('/transaction/course/:courseId', authMiddleware.verifyToken, transactionController.getCourseTransaction);
 router.post('/transaction/course/:courseId', authMiddleware.verifyToken, transactionController.createCourseTransaction);
+router.get('/transaction/event/:eventId', authMiddleware.verifyToken, transactionController.getEventTransaction);
+router.post('/transaction/event/:eventId', authMiddleware.verifyToken, transactionController.createEventTransaction);
 router.get('/payment/:transactionId', authMiddleware.verifyToken, transactionController.getPaymentDetails);
 router.post('/payment/:transactionId', authMiddleware.verifyToken, upload.single('image'), transactionController.uploadPayment);
 

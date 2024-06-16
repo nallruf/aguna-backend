@@ -85,38 +85,39 @@ INSERT INTO path (name, imageUrl, description, roleId) VALUES
 
 -- Seeder for pathFocus table
 INSERT INTO pathFocus (pathId, imageUrl,name, description) VALUES
-    (1, "frontend_pf.jpg",'Frontend', 'Focus on client-side development.'),
-    (1, "backend_pf.jpg" ,'Backend', 'Focus on server-side development.'),
-    (2, "android_pf.jpg",'Android', 'Focus on Android app development.'),
-    (2, "ios_pf.jpg",'iOS', 'Focus on iOS app development.'),
-    (3, "startup_pf.jpg",'Startup Fundamentals', 'Learn how to start and grow a tech startup.'),
-    (4, "dataanalys_pf.jpg",'Data Analysis', 'Analyze and interpret data to solve business problems.'),
-    (4, "ml_pf.jpg",'Machine Learning', 'Explore algorithms and models for predictive analysis.'),
-    (5, "netsec_pf.jpg",'Network Security', 'Protect digital networks from unauthorized access.'),
-    (5, "hacking_pf.jpg",'Ethical Hacking', 'Learn ethical hacking techniques to identify system vulnerabilities.'),
-    (6, "ui_pf.jpg",'UI Design', 'Design intuitive and visually appealing user interfaces.'),
-    (6, "ux_pf.jpg",'UX Research', 'Conduct user research to improve user experience.'),
-    (7, "intro_hacker_pf.jpg","Intro Hacker", "Intro hacker"),
-    (8, "intro_hustler_pf.jpg","Intro Hustler", "Intro hustler"),
-    (9, "intro_hipster_pf.jpg","Intro Hipster", "Intro hipster");
+    (1, 'frontend_pf.jpg','Frontend', 'Focus on client-side development.'),
+    (1, 'backend_pf.jpg' ,'Backend', 'Focus on server-side development.'),
+    (2, 'android_pf.jpg','Android', 'Focus on Android app development.'),
+    (2, 'ios_pf.jpg','iOS', 'Focus on iOS app development.'),
+    (3, 'startup_pf.jpg','Startup Fundamentals', 'Learn how to start and grow a tech startup.'),
+    (4, 'dataanalys_pf.jpg','Data Analysis', 'Analyze and interpret data to solve business problems.'),
+    (4, 'ml_pf.jpg','Machine Learning', 'Explore algorithms and models for predictive analysis.'),
+    (5, 'netsec_pf.jpg','Network Security', 'Protect digital networks from unauthorized access.'),
+    (5, 'hacking_pf.jpg','Ethical Hacking', 'Learn ethical hacking techniques to identify system vulnerabilities.'),
+    (6, 'ui_pf.jpg','UI Design', 'Design intuitive and visually appealing user interfaces.'),
+    (6, 'ux_pf.jpg','UX Research', 'Conduct user research to improve user experience.'),
+    (7, 'intro_hacker_pf.jpg','Intro Hacker', 'Intro hacker'),
+    (8, 'intro_hustler_pf.jpg','Intro Hustler', 'Intro hustler'),
+    (9, 'intro_hipster_pf.jpg','Intro Hipster', 'Intro hipster');
 
 
 -- Seeder for course table
-INSERT INTO course (pathFocusId, imageUrl, name, description, price, level, mentorId, method) VALUES
-    (1, 'webdev_course.jpg', 'Web Development Bootcamp', 'Intensive course covering HTML, CSS, and JavaScript for web development.', 99.99, 'BEGINNER', 2, 'Video'),
-    (1, 'responsive_design.jpg', 'Responsive Web Design', 'Learn how to create responsive and user-friendly websites using modern CSS techniques.', 79.99, 'INTERMEDIATE', 2, 'Video'),
-    (2, 'android_course.jpg', 'Android App Development', 'Build native Android apps using Java and Android Studio.', 129.99, 'BEGINNER', 1, 'Video'),
-    (2, 'ios_course.jpg', 'iOS App Development with Swift', 'Develop iOS apps with Swift programming language and Xcode IDE.', 139.99, 'BEGINNER', 1, 'Video'),
-    (3, 'startup_course.jpg', 'Startup Launchpad', 'Essential course for aspiring entrepreneurs to launch successful tech startups.', 149.99, 'BEGINNER', 3, 'Video'),
-    (4, 'data_analysis.jpg', 'Data Analysis Fundamentals', 'Introduction to data analysis techniques using Python and libraries like Pandas and NumPy.', 89.99, 'BEGINNER', 3, 'Video'),
-    (4, 'ml_course.jpg', 'Machine Learning Basics', 'Learn the basics of machine learning and implement algorithms for data analysis.', 119.99, 'INTERMEDIATE', 3, 'Video'),
-    (5, 'network_security_course.jpg', 'Network Security Fundamentals', 'Understand the principles of network security and common cyber threats.', 109.99, 'BEGINNER', 2, 'Video'),
-    (5, 'ethical_hacking_course.jpg', 'Ethical Hacking Techniques', 'Explore ethical hacking methodologies and techniques to secure digital systems.', 129.99, 'INTERMEDIATE', 2, 'Video'),
-    (6, 'ui_design_course.jpg', 'UI Design Essentials', 'Master the fundamentals of UI design including layout, typography, and color theory.', 69.99, 'BEGINNER', 3, 'Video'),
-    (6, 'ux_research_course.jpg', 'UX Research Methods', 'Learn various UX research methods to gather insights and improve user experience.', 79.99, 'INTERMEDIATE', 3, 'Video'),
-    (7, 'intro_hacker_course.jpg', 'Computational thinking', 'Computional Thinking', 0, 'BEGINNER', 3),
-    (8, 'intro_hustler_course.jpg', 'Team management', 'Team management', 0, 'BEGINNER', 3),
-    (9, 'intro_hipster_course.jpg', 'How to be Creative', 'How to be Creative', 0, 'BEGINNER', 3);
+INSERT INTO course (pathFocusId, imageUrl, name, description, price, method, level, mentorId) VALUES
+    (1, 'webdev_course.jpg', 'Web Development Bootcamp', 'Intensive course covering HTML, CSS, and JavaScript for web development.', 99.99, 'Video', 'BEGINNER', 2),
+    (1, 'responsive_design.jpg', 'Responsive Web Design', 'Learn how to create responsive and user-friendly websites using modern CSS techniques.', 79.99, 'Video', 'INTERMEDIATE', 2),
+    (2, 'android_course.jpg', 'Android App Development', 'Build native Android apps using Java and Android Studio.', 129.99, 'Video', 'BEGINNER', 1),
+    (2, 'ios_course.jpg', 'iOS App Development with Swift', 'Develop iOS apps with Swift programming language and Xcode IDE.', 139.99, 'Video', 'BEGINNER', 1),
+    (3, 'startup_course.jpg', 'Startup Launchpad', 'Essential course for aspiring entrepreneurs to launch successful tech startups.', 149.99, 'Video', 'BEGINNER', 3),
+    (4, 'data_analysis.jpg', 'Data Analysis Fundamentals', 'Introduction to data analysis techniques using Python and libraries like Pandas and NumPy.', 89.99, 'Video', 'BEGINNER', 3),
+    (4, 'ml_course.jpg', 'Machine Learning Basics', 'Learn the basics of machine learning and implement algorithms for data analysis.', 119.99, 'Video', 'INTERMEDIATE', 3),
+    (5, 'network_security_course.jpg', 'Network Security Fundamentals', 'Understand the principles of network security and common cyber threats.', 109.99, 'Video', 'BEGINNER', 2),
+    (5, 'ethical_hacking_course.jpg', 'Ethical Hacking Techniques', 'Explore ethical hacking methodologies and techniques to secure digital systems.', 129.99, 'Video', 'INTERMEDIATE', 2),
+    (6, 'ui_design_course.jpg', 'UI Design Essentials', 'Master the fundamentals of UI design including layout, typography, and color theory.', 69.99, 'Video', 'BEGINNER', 3),
+    (6, 'ux_research_course.jpg', 'UX Research Methods', 'Learn various UX research methods to gather insights and improve user experience.', 79.99, 'Video', 'INTERMEDIATE', 3),
+    (7, 'intro_hacker_course.jpg', 'Computational Thinking', 'Learn the fundamentals of computational thinking and problem-solving techniques.', 0, 'Video', 'BEGINNER', 3),
+    (8, 'intro_hustler_course.jpg', 'Team Management', 'Develop essential team management skills to lead and coordinate effectively.', 0, 'Video', 'BEGINNER', 3),
+    (9, 'intro_hipster_course.jpg', 'How to be Creative', 'Discover techniques and strategies to enhance your creativity.', 0, 'Video', 'BEGINNER', 3);
+
 
 -- Seeder for courseSkills table
 INSERT INTO courseSkills (courseId, skillId) VALUES
@@ -272,7 +273,7 @@ INSERT INTO speakers (name, jobs, imageUrl) VALUES
 -- Seeder for event table
 INSERT INTO event (title, shortDescription, detailDescription, date, time, organizer, imageUrl, location, price) VALUES
     ('Tech Summit 2024', 'Join industry experts and innovators for a day of insights and networking.', 'Join industry experts and innovators for a day of insights and networking.', '2024-08-15 09:00:00', '20.00 - 21.00','Tech Events LLC', 'event_techsummit.jpg', 'Convention Center A', 199.99),
-    ('Data Science Conference', 'Explore the latest trends and advancements in data science and analytics.', 'Explore the latest trends and advancements in data science and analytics.', '2024-09-20 10:00:00', "20.00 - 21.00",'Data Insights Inc.', 'event_datascience.jpg', 'Conference Hall B', 149.99);
+    ('Data Science Conference', 'Explore the latest trends and advancements in data science and analytics.', 'Explore the latest trends and advancements in data science and analytics.', '2024-09-20 10:00:00', '20.00 - 21.00','Data Insights Inc.', 'event_datascience.jpg', 'Conference Hall B', 149.99);
 
 -- Seeder for eventSpeaker table
 INSERT INTO eventSpeaker (speakerId, eventId) VALUES
