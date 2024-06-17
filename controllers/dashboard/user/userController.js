@@ -2,7 +2,7 @@ const pool = require('../../../config/db');
 
 const updateProfile = async (req, res) => {
     const userId = req.user.userId;
-    let {  username, email, phoneNumber, universities } = req.body;
+    let {  name, username, phoneNumber, universities } = req.body;
     let image = req.file ? req.file.filename : null;
     
 
@@ -21,13 +21,13 @@ const updateProfile = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        if (name === null || name === undefined || name === '') {
+            name = getUser[0].name;
+        };
         if (username === null || username === undefined || username === '') {
             username = getUser[0].username;
         };
 
-        if (email === null || email === undefined || email === '') {
-            email = getUser[0].email;
-        };
 
         if (phoneNumber === null || phoneNumber === undefined || phoneNumber === '') {
             phoneNumber = getUser[0].phoneNumber;
@@ -38,7 +38,7 @@ const updateProfile = async (req, res) => {
         const imageUrl = image || getUser[0].imageUrl;
 
         if (username === getUser[0].username &&
-            email === getUser[0].email &&
+            name === getUser[0].name &&
             phoneNumber === getUser[0].phoneNumber &&
             universities === getUser[0].universities &&
             imageUrl === getUser[0].imageUrl) {
@@ -47,9 +47,9 @@ const updateProfile = async (req, res) => {
 
         const [result] = await pool.query(`
             UPDATE users
-            SET username = ?, email = ?, phoneNumber = ?, universities = ?, imageUrl = ?
+            SET name = ?, username = ?, phoneNumber = ?, universities = ?, imageUrl = ?
             WHERE id = ?
-        `, [username, email, phoneNumber, universities, imageUrl, userId]);
+        `, [name, username, phoneNumber, universities, imageUrl, userId]);
 
         console.log('Update result:', result);
 
@@ -69,7 +69,7 @@ const getProfile = async (req, res) => {
 
     try {
         const profile = await pool.query(`
-            SELECT id, username, email, phoneNumber, universities, imageUrl
+            SELECT id, name, username, email, phoneNumber, universities, imageUrl
             FROM users
             WHERE id = ?
         `, [userId]);
