@@ -8,7 +8,7 @@ const getRole = async (req, res) => {
                 r.name AS role_name,
                 COUNT(DISTINCT p.id) AS total_path,
                 COUNT(DISTINCT pf.id) AS total_path_focus,  
-                COUNT(DISCTINCT c.id) AS total_course,
+                COUNT(DISTINCT c.id) AS total_course,
                 COUNT(DISTINCT uc.id) AS total_student
                 FROM
                     role r
@@ -30,9 +30,10 @@ const getRole = async (req, res) => {
 };
 
 const createRole = async (req, res) => {
-    const { name } = req.body;
+    const { name, description } = req.body;
     try {
-        const [roles] = await pool.query('INSERT INTO role (name) VALUES (?)', [name]);
+        console.log(name);
+        const [roles] = await pool.query('INSERT INTO role (name, description) VALUES (?, ?)', [name, description]);
         res.json({ message: 'Role has been added' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -48,22 +49,23 @@ const getDetailRole = async (req, res) => {
                 r.name AS role_name,
                 COUNT(DISTINCT p.id) AS total_path,
                 COUNT(DISTINCT pf.id) AS total_path_focus,
-                COUNT(DISTINCT c.id) AS total_course
-                COUNT(DISTINCT t.id) AS total_test
+                COUNT(DISTINCT c.id) AS total_course,
+                COUNT(DISTINCT t.id) AS total_test,
+                COUNT(DISTINCT uc.id) AS total_student,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'id', p.id,
                         'name', p.name,
-                        'imageurl', p.image,
-                        'description', p.description,
+                        'imageurl', p.imageUrl,
+                        'description', p.description
                     ) 
-                ) AS paths
+                ) AS paths,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
                         'id', t.id,
                         'name', t.name,
                         'description', t.description,
-                        'duration', t.duration,
+                        'duration', t.duration
                     )
                 ) AS test
                 FROM
@@ -76,6 +78,8 @@ const getDetailRole = async (req, res) => {
                     course c ON pf.id = c.pathFocusId
                 LEFT JOIN
                     test t ON r.testId =  t.id
+                LEFT JOIN
+                    userCourse uc ON c.id = uc.courseId
                 WHERE
                     r.id = ?
         `, [roleId]);
@@ -84,7 +88,14 @@ const getDetailRole = async (req, res) => {
             return res.status(404).json({ error: 'Role not found' });
         }
 
-        res.json(role);
+        const uniqueData = role.map(item => ({
+            ...item,
+            paths: [...new Set(item.paths.map((path) => JSON.stringify(path)))]
+                .map((path) => JSON.parse(path)),
+            test: [...new Set(item.test.map((test) => JSON.stringify(test)))].map((test) => JSON.parse(test))
+        }));
+
+        res.json(uniqueData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -108,7 +119,8 @@ const createPath = async (req, res ) => {
 
 module.exports = {
     getRole,
-    createRole 
+    createRole,
+    getDetailRole
 }
 
 

@@ -15,6 +15,7 @@ var indexRouter = require('./routes/index');
 var publicApiRouter = require('./routes/publicApi');
 var apiRouter = require('./routes/api');
 var userRouter = require('./routes/users');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/', indexRouter);
 v1Router.use('/public', publicApiRouter);
 v1Router.use('/auth', apiRouter);
 v1Router.use('/user', userRouter);
+v1Router.use('/admin', adminRouter);
 
 
 // catch 404 and forward to error handler
@@ -77,9 +79,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const port = 3000;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on port ${port}`);
-});
+// const port = 3000;
+// app.listen(port, '0.0.0.0', () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 
 module.exports = app;

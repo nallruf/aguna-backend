@@ -27,7 +27,7 @@ router.get('/challenge/history', authMiddleware.verifyToken, challengeUser.getHi
 
 router.get('/transaction', authMiddleware.verifyToken, transactionUser.getTransaction)
 
-router.post('/profile/update', authMiddleware.verifyToken, profile.updateProfile)
+router.post('/profile/update', authMiddleware.verifyToken, upload.single('image'), profile.updateProfile)
 router.get('/profile', authMiddleware.verifyToken, profile.getProfile)
 
 module.exports = router;
