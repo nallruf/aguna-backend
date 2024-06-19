@@ -3,6 +3,7 @@ var router = express.Router();
 
 const adminDashboard = require('../controllers/dashboard/admin/dashboardController');
 const roleDashboard = require('../controllers/dashboard/admin/roleController');
+const eventDashboard = require('../controllers/dashboard/admin/eventController');
 
 const authMiddleware = require('../middlewares/authMiddleware');
 const { upload } = require('../middlewares/multer');
@@ -52,5 +53,24 @@ router.patch('/test/question/:questionId', authMiddleware.verifyToken, roleDashb
 router.delete('/test/question/:questionId', authMiddleware.verifyToken, roleDashboard.deleteQuestion);
 
 router.get('/mentor', authMiddleware.verifyToken, roleDashboard.getMentor);
+
+router.get('/event', authMiddleware.verifyToken, eventDashboard.getEvent);
+router.post('/event', authMiddleware.verifyToken, upload.single('image'), eventDashboard.createEvent);
+router.get('/event/:eventId', authMiddleware.verifyToken, eventDashboard.getDetailEvent);
+router.get('/event/:eventId/form', authMiddleware.verifyToken, eventDashboard.getEventById);
+router.patch('/event/:eventId', authMiddleware.verifyToken, upload.single('image'), eventDashboard.updateEvent);
+router.delete('/event/:eventId', authMiddleware.verifyToken, eventDashboard.deleteEvent);
+
+router.get('/speaker', authMiddleware.verifyToken, eventDashboard.getSpeaker);
+router.post('/speaker', authMiddleware.verifyToken, upload.single('image'), eventDashboard.createSpeaker);
+router.get('/speaker/:speakerId/form', authMiddleware.verifyToken, eventDashboard.getSpeakerById);
+router.patch('/speaker/:speakerId', authMiddleware.verifyToken, upload.single('image'), eventDashboard.updateSpeaker);
+router.delete('/speaker/:speakerId', authMiddleware.verifyToken, eventDashboard.deleteSpeaker);
+
+router.get('/event/speaker/:eventId', authMiddleware.verifyToken, eventDashboard.getEventSpeaker);
+router.post('/event/speaker/:eventId', authMiddleware.verifyToken, eventDashboard.addEventSpeaker);
+router.delete('/event/speaker/:eventId/:speakerId', authMiddleware.verifyToken, eventDashboard.deleteEventSpeaker);
+
+
 
 module.exports = router;

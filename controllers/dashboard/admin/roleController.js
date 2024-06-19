@@ -560,7 +560,7 @@ const getMentor = async (req, res) => {
             FROM
                 mentor m
             LEFT JOIN
-                users u ON m.userId = u.id
+                // users u ON m.userId = u.id
             GROUP BY m.id
         `);
 

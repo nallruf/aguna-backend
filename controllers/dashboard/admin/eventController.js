@@ -1,5 +1,8 @@
 const pool = require('../../../config/db');
 
+const fs = require('fs-extra');
+const path = require('path');
+
 const getEvent = async (req, res) => {
     try {
         const [event] = await pool.query(`
@@ -21,7 +24,7 @@ const getEvent = async (req, res) => {
                     )
                 ) AS skills
             FROM
-                events e
+                event e
             LEFT JOIN
                 eventSkills es ON e.id = es.eventId
             LEFT JOIN
@@ -37,13 +40,15 @@ const getEvent = async (req, res) => {
 
 const createEvent = async (req, res) => {
     
-    const { title, shortDescription, detailDescription , location, date, time, imageUrl, organizer, link, type , skills} = req.body;
+    const { title, shortDescription, detailDescription , location, date, time, organizer, link, type , skills} = req.body;
+    const imageUrl = req.file ? req.file.filename : null;
 
     try {
         const [result] = await pool.query(`
-            INSERT INTO events (title, shortDescription, detailDescription,location, date, time, imageUrl, organizer, link, type)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `, [title, shortDescription, detailDescription,location, date, time, imageUrl, organizer, link, type]);
+            INSERT INTO event (title, shortDescription, detailDescription, location, date, time, imageUrl, organizer, link, type)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [title, shortDescription, detailDescription, location, date, time, imageUrl, organizer, link, type]);
+
 
         if (result.affectedRows === 0) {
             return res.status(400).json({ error: 'Failed to create event' });
@@ -53,7 +58,7 @@ const createEvent = async (req, res) => {
 
         if (skills && skills.length > 0) {
             const eventSkills = skills.map(skillId => [eventId, skillId]);
-            await pool.query('INSERT INTO eventSkills (courseId, skillId) VALUES ?', [eventSkills]);
+            await pool.query('INSERT INTO eventSkills (eventId, skillId) VALUES ?', [eventSkills]);
         }
 
 
@@ -63,16 +68,57 @@ const createEvent = async (req, res) => {
     }
 };
 
+const getEventById = async (req, res) => {
+    const { eventId } = req.params;
+
+    try {
+        const [event] = await pool.query(`
+            SELECT 
+                e.id,
+                e.title,
+                e.shortDescription,
+                e.location,
+                e.date,
+                e.time,
+                e.imageUrl,
+                e.organizer,
+                e.link,
+                e.type,
+                JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id', s.id,
+                        'name', s.name
+                    )
+                ) AS skills
+            FROM
+                event e
+            LEFT JOIN
+                eventSkills es ON e.id = es.eventId
+            LEFT JOIN
+                skills s ON es.skillId = s.id
+            WHERE
+                e.id = ?
+            GROUP BY e.id
+        `, [eventId]);
+
+        res.json(event);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }   
+
+    
+}
+
 const updateEvent = async (req, res) => {
     const { eventId } = req.params;
     let { title, shortDescription, detailDescription, location, date, time, organizer, link, type, price } = req.body;
 
-    let imageUrl = req.file ? req.file.filename : null;
+    let image = req.file ? req.file.filename : null;
 
     try {
         const [event] = await pool.query(`
             SELECT *
-            FROM events
+            FROM event
             WHERE id = ?
         `, [eventId]);
 
@@ -137,13 +183,18 @@ const updateEvent = async (req, res) => {
         }
 
         const [result] = await pool.query(`
-            UPDATE events
+            UPDATE event
             SET title = ?, shortDescription = ?, detailDescription = ?, location = ?, date = ?, time = ?, imageUrl = ?, organizer = ?, price = ? ,link = ?, type = ?
             WHERE id = ?
         `, [title, shortDescription, detailDescription, location, date, time, imageUrl, organizer, price, link, type, eventId]);
 
         if (result.affectedRows === 0) {
             return res.status(400).json({ error: 'Failed to update event' });
+        }
+
+        if (event[0].imageUrl ){
+
+            await fs.unlink(path.join(`public/images/${event[0].imageUrl}`))
         }
 
         res.json({ message: 'Event updated' });
@@ -159,17 +210,29 @@ const deleteEvent = async (req, res) => {
     try {
 
         const [eventSpeaker] = await pool.query(`
-            DELETE FROM eventSpeakers
+            DELETE FROM eventSpeaker
             WHERE eventId = ?
         `, [eventId]);
 
+
+        const [event] = await pool.query(`
+            SELECT *
+            FROM event
+            WHERE id = ?
+        `, [eventId]);
+
         const [result] = await pool.query(`
-            DELETE FROM events
+            DELETE FROM event
             WHERE id = ?
         `, [eventId]);
 
         if (result.affectedRows === 0) {
             return res.status(400).json({ error: 'Failed to delete event' });
+        }
+
+        if (event[0].imageUrl ){
+
+            await fs.unlink(path.join(`public/images/${event[0].imageUrl}`))
         }
 
         res.json({ message: 'Event deleted' });
@@ -204,18 +267,18 @@ const getDetailEvent = async (req, res) => {
                 ) AS skills,
                 JSON_ARRAYAGG(
                     JSON_OBJECT(
-                        'id', s.id,
-                        'name', s.name,
-                        'imageUrl', s.imageUrl,
-                        'job', s.job
+                        'id', sp.id,
+                        'name', sp.name,
+                        'imageUrl', sp.imageUrl,
+                        'job', sp.jobs
                         )
                 ) AS speakers
             FROM
-                events e
+                event e
             LEFT JOIN
-                eventSpeakers es ON e.id = es.eventId
+                eventSpeaker es ON e.id = es.eventId
             LEFT JOIN
-                speakers s ON e.id = es.speakerId
+                speakers sp ON sp.id = es.speakerId
             LEFT JOIN
                 eventSkills sk ON e.id = sk.eventId
             LEFT JOIN
@@ -228,36 +291,46 @@ const getDetailEvent = async (req, res) => {
             return res.status(404).json({ error: 'Event not found' });
         }
 
-        res.json(event[0]);
+        const uniqueData = event.map(item => ({
+            ...item,
+            skills: [...new Set(item.skills.map(skill => JSON.stringify(skill)))].map(skill => JSON.parse(skill)),
+            speakers: [...new Set(item.speakers.map(speaker => JSON.stringify(speaker)))].map(speaker => JSON.parse(speaker))
+        }));
+
+
+        res.json(uniqueData);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
 
-const addSpeaker = async (req, res) => {
-    const { eventId } = req.params;
-    const { name, imageUrl, job } = req.body;
+const getSpeaker = async (req, res) => {
+    try {
+        const [speakers] = await pool.query(`
+            SELECT *
+            FROM speakers
+        `);
+
+        res.json(speakers);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const createSpeaker = async (req, res) => {
+    const { name, job } = req.body;
+    const image = req.file ? req.file.filename : null;
 
     try {
         const [result] = await pool.query(`
-            INSERT INTO speakers (name, imageUrl, job, eventId)
-            VALUES (?, ?, ?, ?)
-        `, [name, imageUrl, job, eventId]);
+            INSERT INTO speakers (name, imageUrl, jobs)
+            VALUES (?, ?, ?)
+        `, [name, image, job]);
 
         if (result.affectedRows === 0) {
             return res.status(400).json({ error: 'Failed to add speaker' });
         }
 
-        const speakerId = result.insertId;
-
-        const [eventSpeaker] = await pool.query(`
-            INSERT INTO eventSpeakers (eventId, speakerId)
-            VALUES (?, ?)
-        `, [eventId, speakerId]);
-
-        if (eventSpeaker.affectedRows === 0) {
-            return res.status(400).json({ error: 'Failed to add event speaker' });
-        }
 
         res.json({ message: 'Speaker added' });
     } catch (error) {
@@ -270,12 +343,28 @@ const deleteSpeaker = async (req, res) => {
 
     try {
         const [result] = await pool.query(`
-            DELETE FROM eventSpeakers
+            DELETE FROM eventSpeaker
             WHERE speakerId = ?
         `, [speakerId]);
+        
+        const [speaker] = await pool.query(`
+            SELECT *
+            FROM speakers
+            WHERE id = ?
+        `, [speakerId]);
 
-        if (result.affectedRows === 0) {
+        const [deleteSpeaker] = await pool.query(`
+            DELETE FROM speakers
+            WHERE id = ?
+        `, [speakerId]);
+
+        if (deleteSpeaker.affectedRows === 0) {
             return res.status(400).json({ error: 'Failed to delete speaker' });
+        }
+
+        if (speaker[0].imageUrl ){
+
+            await fs.unlink(path.join(`public/images/${speaker[0].imageUrl}`))
         }
 
         res.json({ message: 'Speaker deleted' });
@@ -284,9 +373,29 @@ const deleteSpeaker = async (req, res) => {
     }
 };
 
+const getSpeakerById = async (req, res) => {
+    const { speakerId } = req.params;
+
+    try {
+        const [speaker] = await pool.query(`
+            SELECT *
+            FROM speakers
+            WHERE id = ?
+        `, [speakerId]);
+
+        if (!speaker[0]) {
+            return res.status(404).json({ error: 'Speaker not found' });
+        }
+
+        res.json(speaker);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 const updateSpeaker = async (req, res) => {
     const { speakerId } = req.params;
-    const { name, job } = req.body;
+    let { name, job } = req.body;
     let image = req.file ? req.file.filename : null;
 
     try {
@@ -305,24 +414,92 @@ const updateSpeaker = async (req, res) => {
         }
 
         if (job === null || job === undefined || job === '') {
-            job = speaker[0].job;
+            job = speaker[0].jobs;
         }
 
         const imageUrl = image || speaker[0].imageUrl;
 
         if (name === speaker[0].name &&
-            job === speaker[0].job &&
+            job === speaker[0].jobs &&
             imageUrl === speaker[0].imageUrl) {
             return res.json({ message: 'No changes detected' });
         }
 
         const [result] = await pool.query(`
             UPDATE speakers
-            SET name = ?, imageUrl = ?, job = ?
+            SET name = ?, imageUrl = ?, jobs = ?
             WHERE id = ?
         `, [name, imageUrl, job, speakerId]);
 
+        if (result.affectedRows === 0) {
+            return res.status(400).json({ error: 'Failed to update speaker' });
+        }
+
+        if (speaker[0].imageUrl ){
+            fs.unlink(path.join(`public/images/${speaker[0].imageUrl}`))
+        }
+
         res.json({ message: 'Speaker updated' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const addEventSpeaker = async (req, res) => {
+    const { eventId } = req.params;
+    const { speakerId } = req.body;
+
+    try {
+
+        if ( speakerId && speakerId.length > 0) {
+            const eventSpeakers = speakerId.map(speakerId => [eventId, speakerId]);
+            await pool.query('INSERT INTO eventSpeaker (eventId, speakerId) VALUES ?', [eventSpeakers]);
+        }
+
+        res.json({ message: 'Event speaker added' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const deleteEventSpeaker = async (req, res) => {
+    const { eventId, speakerId } = req.params;
+
+    try {
+        const [result] = await pool.query(`
+            DELETE FROM eventSpeaker
+            WHERE eventId = ? AND speakerId = ?
+        `, [eventId, speakerId]);
+
+        if (result.affectedRows === 0) {
+            return res.status(400).json({ error: 'Failed to delete event speaker' });
+        }
+
+        res.json({ message: 'Event speaker deleted' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const getEventSpeaker = async (req, res) => {
+    const { eventId } = req.params;
+
+    try {
+        const [eventSpeaker] = await pool.query(`
+            SELECT 
+                sp.id,
+                sp.name,
+                sp.imageUrl,
+                sp.jobs
+            FROM
+                eventSpeaker es
+            LEFT JOIN
+                speakers sp ON es.speakerId = sp.id
+            WHERE
+                es.eventId = ?
+        `, [eventId]);
+
+        res.json(eventSpeaker);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -332,6 +509,18 @@ module.exports = {
     getEvent,
     createEvent,
     getDetailEvent,
-    addSpeaker
+    createSpeaker,
+    deleteSpeaker,
+    updateSpeaker,
+    updateEvent,
+    deleteEvent,
+    getEventById,
+    getSpeaker,
+    addEventSpeaker,
+    deleteEventSpeaker,
+    getSpeakerById,
+    getEventSpeaker
+
+
 };
 
