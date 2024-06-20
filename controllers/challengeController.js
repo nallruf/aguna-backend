@@ -81,10 +81,33 @@ const submitChallenge = async (req, res) => {
     }
 }
 
+const getAllLeaderboard = async (req, res) => {
+    try {
+        const [leaderboard] = await pool.query(`
+            SELECT
+                u.name AS name,
+                u.imageUrl AS imageUrl,
+                u.point AS totalScore
+            FROM
+                users u
+            WHERE
+                u.role = 'USER'
+            GROUP BY
+                u.id
+            ORDER BY
+                totalScore DESC
+        `);
+
+        res.json(leaderboard);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 
 module.exports = {
     getChallenges,
     getChallengeById,
-    submitChallenge
+    submitChallenge,
+    getAllLeaderboard
 }

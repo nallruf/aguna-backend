@@ -1,6 +1,6 @@
 const pool = require('../../../config/db');
-const { get } = require('../../../routes');
 const fs = require('fs-extra');
+const { get } = require('http');
 const path = require('path');
 
 const getRole = async (req, res) => {
@@ -278,7 +278,9 @@ const updatePath = async (req, res) => {
             return res.status(400).json({ error: 'Failed to update path' });
         }
 
-        await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        if (getPath[0].imageUrl && imageUrl !== getPath[0].imageUrl) {    
+            await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        }
 
         res.json({ message: 'Path updated' });
     } catch (error) {
@@ -297,6 +299,10 @@ const deletePathById = async (req, res) => {
         }
 
         const [path] = await pool.query('DELETE FROM path WHERE id = ?', [pathId]);
+
+        if (pathFocus[0].imageUrl ) {    
+            await fs.unlink(path.join(`public/images/${pathFocus[0].imageUrl}`))
+        }
 
         res.json({ message: 'Path has been deleted' });
     } catch (error) {
@@ -444,7 +450,10 @@ const updatePathFocus = async (req, res) => {
             return res.status(400).json({ error: 'Failed to update path focus' });
         }
 
-        await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        if (getPath[0].imageUrl && imageUrl !== getPath[0].imageUrl) {    
+            await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        }
+
 
         res.json({ message: 'Path focus updated' });
     } catch (error) {
@@ -464,6 +473,18 @@ const deletePathFocusById = async (pathFocusId, res) => {
         }
 
         const [pathFocus] = await pool.query('DELETE FROM pathFocus WHERE id = ?', [pathFocusId]);
+
+        const [getPath] = await pool.query(`
+            SELECT *
+            FROM 
+                pathFocus
+            WHERE
+                id = ?
+            `,[pathFocusId]);
+
+        if (getPath[0].imageUrl) {    
+            await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        }
 
         res.json({ message: 'Path Focus has been deleted' });
 
@@ -485,6 +506,18 @@ const deletePathFocus = async (req, res) => {
 
         const [pathFocus] = await pool.query('DELETE FROM pathFocus WHERE id = ?', [pathFocusId]);
 
+        const [getPath] = await pool.query(`
+            SELECT *
+            FROM 
+                pathFocus
+            WHERE
+                id = ?
+            `,[pathFocusId]);
+
+        if (getPath[0].imageUrl) {    
+            await fs.unlink(path.join(`public/images/${getPath[0].imageUrl}`))
+        }
+        
         res.json({ message: 'Path Focus has been deleted' });
 
     } catch (error) {
@@ -560,7 +593,7 @@ const getMentor = async (req, res) => {
             FROM
                 mentor m
             LEFT JOIN
-                // users u ON m.userId = u.id
+                users u ON m.userId = u.id
             GROUP BY m.id
         `);
 
@@ -568,10 +601,6 @@ const getMentor = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
-
-const getSpeaker = async (req, res) => {
-
 }
 
 const createCourse = async (req, res ) => {
@@ -696,7 +725,9 @@ const updateCourse = async (req, res) => {
             return res.status(400).json({ error: 'Failed to update course' });
         }
 
-        await fs.unlink(path.join(`public/images/${getCourse[0].imageUrl}`))
+        if (getCourse[0].imageUrl && imageUrl !== getCourse[0].imageUrl) {
+            await fs.unlink(path.join(`public/images/${getCourse[0].imageUrl}`))
+        }
 
         res.json({ message: 'Course updated' });
     } catch (error) {

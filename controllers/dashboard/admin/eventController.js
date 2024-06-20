@@ -192,7 +192,7 @@ const updateEvent = async (req, res) => {
             return res.status(400).json({ error: 'Failed to update event' });
         }
 
-        if (event[0].imageUrl ){
+        if (event[0].imageUrl && imageUrl !== event[0].imageUrl){
 
             await fs.unlink(path.join(`public/images/${event[0].imageUrl}`))
         }
@@ -435,7 +435,7 @@ const updateSpeaker = async (req, res) => {
             return res.status(400).json({ error: 'Failed to update speaker' });
         }
 
-        if (speaker[0].imageUrl ){
+        if (speaker[0].imageUrl && imageUrl !== speaker[0].imageUrl){
             fs.unlink(path.join(`public/images/${speaker[0].imageUrl}`))
         }
 

@@ -16,6 +16,7 @@ router.get('/landing/faq', faqController.getFaq);
 router.get('/landing/event', eventController.getEvents);
 router.get('/landing/challenge', challengeController.getChallenges);
 router.get('/skills', skillController.getSkills);
+router.get('/leaderboard', challengeController.getAllLeaderboard);
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
