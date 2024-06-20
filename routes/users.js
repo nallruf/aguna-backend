@@ -18,6 +18,7 @@ router.get('/course/:userCourseId', authMiddleware.verifyToken, courseUser.getCo
 
 router.post('/setprogress', authMiddleware.verifyToken, courseUser.saveProgress);
 router.post('/settestimoni', authMiddleware.verifyToken, courseUser.giveTestimoni);
+router.get('/testimoni/:userCourseId', authMiddleware.verifyToken, courseUser.getTestimoni);
 
 router.get('/event/future', authMiddleware.verifyToken, eventUser.getFutureEvent);
 router.get('/event/finish', authMiddleware.verifyToken, eventUser.getFinishEvent);

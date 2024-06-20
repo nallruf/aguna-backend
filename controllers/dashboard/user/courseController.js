@@ -189,6 +189,14 @@ const giveTestimoni = async (req, res) => {
     const { userCourseId, quotes } = req.body;
 
     try {
+        const [testimoniExist] = await pool.query(`
+            SELECT * FROM testimoni WHERE userCourseId = ?
+        `, [userCourseId]);
+
+        if (testimoniExist.length > 0) {
+            return res.status(400).json({ message: "Testimoni already given" });
+        }
+
         const [testimoni] = await pool.query(`
                 INSERT INTO testimoni (userCourseId, quotes )
                 VALUES(?, ?)
@@ -200,6 +208,19 @@ const giveTestimoni = async (req, res) => {
     }
 }
 
+const getTestimoni = async (req, res) => {
+    const { userCourseId } = req.params;
+
+    try {
+        const [testimoni] = await pool.query(`
+            SELECT * FROM testimoni WHERE userCourseId = ?
+        `, [userCourseId]);
+
+        res.json(testimoni);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 
 
@@ -208,5 +229,6 @@ module.exports = {
     getInProgressCourse,
     getCourseMaterial,
     saveProgress,
-    giveTestimoni
+    giveTestimoni,
+    getTestimoni
 };
