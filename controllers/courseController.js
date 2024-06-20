@@ -498,6 +498,24 @@ const getTestQuestions = async (req, res) => {
   }
 };
 
+const saveTest = async (req, res) => {
+  const userId = req.user.userId;
+  const testId = req.params.testId;
+  const { score, correctAnswer, wrongAnswer } = req.body;
+
+  try {
+
+    const [userTest] = await pool.query(`
+        INSERT INTO userTests (userId, testId, correctAnswers, wrongAnswers, totalScore, status, timestamp)
+        VALUES (?, ?, ?, ?, ?, 'COMPLETED', NOW())
+      `, [userId, testId, correctAnswer, wrongAnswer, score]);
+
+    res.json({ message: "Test saved successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getDataLanding,
   getRoleById,
@@ -509,4 +527,5 @@ module.exports = {
   checkTestForRole,
   getTestDetails,
   getTestQuestions,
+  saveTest
 };

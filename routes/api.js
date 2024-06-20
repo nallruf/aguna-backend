@@ -24,6 +24,7 @@ router.get('/course/mentor/:courseId', authMiddleware.verifyToken, courseControl
 router.get('/cek/test/:roleId', authMiddleware.verifyToken, courseController.checkTestForRole);
 router.get('/test/detail/:testId', authMiddleware.verifyToken, courseController.getTestDetails);
 router.get('/test/start/:testId', authMiddleware.verifyToken, courseController.getTestQuestions);
+router.post('/test/submit/:testId', authMiddleware.verifyToken, courseController.saveTest);
 
 
 router.get('/event/:id', authMiddleware.verifyToken ,eventController.getEventById);
