@@ -22,7 +22,8 @@ const getTransaction = async (req, res ) => {
                     WHEN t.type = 'EVENT' THEN e.imageUrl
                     ELSE ''
                 END AS itemImageUrl,
-                dt.imageUrl AS paymentImageUrl
+                dt.imageUrl AS paymentImageUrl,
+                dt.totalPrice AS totalPrice
                 FROM
                     transaction t
                 LEFT JOIN
