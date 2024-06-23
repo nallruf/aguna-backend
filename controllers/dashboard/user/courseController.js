@@ -159,7 +159,7 @@ const getCourseMaterial = async (req, res) => {
             `, [userCourseId, courseId]);
 
         const courseWithMaterials = {
-                userCourseId : userCourseId,
+                userCourseId: parseInt(userCourseId),
                 ...courseData[0],
                 materials: materials
             };
