@@ -162,7 +162,7 @@ const getCourseMaterial = async (req, res) => {
 
         // skills: [...new Set(item.skills.map(skill => JSON.stringify(skill)))].map(skill => JSON.parse(skill)),
         
-        uniqueMaterial: [...new Set(materials.map(material => JSON.stringify(material)))].map(material => JSON.parse(material));
+        const uniqueMaterial =  [...new Set(materials.map(material => JSON.stringify(material)))].map(material => JSON.parse(material));
             
 
         const courseWithMaterials = {
