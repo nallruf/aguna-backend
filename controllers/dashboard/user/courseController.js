@@ -158,10 +158,17 @@ const getCourseMaterial = async (req, res) => {
             );            
             `, [userCourseId, courseId]);
 
+        // const [uniqueMaterial] = materials.
+
+        // skills: [...new Set(item.skills.map(skill => JSON.stringify(skill)))].map(skill => JSON.parse(skill)),
+        
+        uniqueMaterial: [...new Set(materials.map(material => JSON.stringify(material)))].map(material => JSON.parse(material));
+            
+
         const courseWithMaterials = {
                 userCourseId: parseInt(userCourseId),
                 ...courseData[0],
-                materials: materials
+                materials: uniqueMaterial
             };
         
         res.json(courseWithMaterials)
