@@ -7,6 +7,7 @@ const getDataLanding = async (req, res) => {
         SELECT
         r.id AS role_id,
         r.name AS role_name,
+        r.description AS role_description,
         COUNT(DISTINCT p.id) AS total_path,
         COUNT(DISTINCT c.id) AS total_course,
         COUNT(DISTINCT uc.id) AS total_student,
