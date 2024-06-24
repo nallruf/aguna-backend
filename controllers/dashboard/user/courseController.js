@@ -192,6 +192,20 @@ const saveProgress = async (req, res) => {
     }
 };
 
+const finishCourse = async (req, res) => {
+    const { userCourseId } = req.body;
+
+    try {
+        await pool.query(`
+            UPDATE userCourse SET completionStatus = 'COMPLETED' WHERE id = ?
+        `, [userCourseId]);
+
+        res.json({ message: "Course finished successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 const giveTestimoni = async (req, res) => {
     const { userCourseId, quotes } = req.body;
 
@@ -237,5 +251,6 @@ module.exports = {
     getCourseMaterial,
     saveProgress,
     giveTestimoni,
-    getTestimoni
+    getTestimoni,
+    finishCourse
 };
