@@ -9,6 +9,7 @@ const challengeController = require('../controllers/challengeController');
 const transactionController = require('../controllers/transactionController');
 const authController = require('../controllers/authController');
 const skillController = require('../controllers/skillController');
+const transaskiController = require('../controllers/dashboard/admin/transactionController');
  
 
 router.get('/landing/role', courseController.getDataLanding);
@@ -20,6 +21,9 @@ router.get('/leaderboard', challengeController.getAllLeaderboard);
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+
+router.patch('/transaction/:transactionId/accept',  transaskiController.verifyPayment);
+
 // router.post('/logout', authMiddleware.verifyToken, authController.logout);
 
 module.exports = router;    

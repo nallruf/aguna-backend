@@ -39,6 +39,14 @@ const verifyPayment = async (req, res) => {
     try {
         await pool.query('UPDATE transaction SET status = "ACCEPT" WHERE id = ?', [transactionId]);
 
+        const [transaction] = await pool.query('SELECT * FROM transaction WHERE id = ?', [transactionId]);
+        const { userId, courseId, eventId } = transaction[0];
+        if (courseId) {
+            await pool.query('INSERT INTO userCourse (userId, courseId, completionStatus) VALUES (?, ?, "IN PROGRESS")', [userId, courseId]);
+        } else if (eventId) {
+            await pool.query('INSERT INTO userEvent (userId, eventId) VALUES (?, ?)', [userId, eventId]);
+        }
+
         res.json({ message: 'Payment verified' });
     } catch (error) {
         res.status(500).json({ error: error.message });
