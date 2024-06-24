@@ -42,7 +42,7 @@ const verifyPayment = async (req, res) => {
         const [transaction] = await pool.query('SELECT * FROM transaction WHERE id = ?', [transactionId]);
         const { userId, courseId } = transaction[0];
         if (courseId) {
-            await pool.query('INSERT INTO userCourse (userId, courseId, completionStatus) VALUES (?, ?, "IN PROGRESS")', [userId, courseId]);
+            await pool.query('INSERT INTO userCourse (userId, courseId, completionStatus) VALUES (?, ?, "IN_PROGRESS")', [userId, courseId]);
         } 
 
         console.log("Success");
